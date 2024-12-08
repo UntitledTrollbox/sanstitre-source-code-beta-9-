@@ -36,7 +36,7 @@ const socket = io("https://www.windows93.net:8086", {
                 socket.send(he.decode("sanstitre, literally a user index\nversion - beta 9\ngh!untitled - creator of the bot\ngh!qpfm - cute bot :3\ngh!hain - maker of cute bot :3\ngh!word - trigger applevinyl's word command thingy\ngh!mage - tb og\npage 1/4\ndo gh!help <page number> for page"))
             }
             if (data.msg == "gh!help 2") {
-                socket.send(he.decode("gh!flapplin - nice bot\ngh!bensav - silly guy\ngh!applevinyl - qpfm's husband\ngh!big - bigweirdo\ngh!harje - brazillian guy\npage 2/4\ndo gh!help <page number> for page"))
+                socket.send(he.decode("gh!flapplin - nice bot\ngh!bensav - silly guy\ngh!applevinyl - qpfm's husband\ngh!big - bigweirdo\ngh!harje - brazillian guy\ngh!name [name] - change name\ngh!color [color] - change color\npage 2/4\ndo gh!help <page number> for page"))
             }
             if (data.msg == "gh!help 3") {
                 socket.send(he.decode("gh!rnpg - generate a random polygon from 1 to 100 using scarbot\ngh!ar - we do not talk about him.\ngh!dell - master coder\ngh!wowaka - hain's favorite vocaloid producer\ngh!rng - a random random generator from 1 to 255 (255 - win)\npage 3/4\ndo gh!help <page number> for page"))
@@ -104,4 +104,22 @@ const socket = io("https://www.windows93.net:8086", {
             if (data.msg == "gh!event") {
                 socket.send(he.decode("NEW EVENT! christmas updates!!\nnow, updates for sanstitre will be more frequent\nthat's all about the event, for now..."))
             }
+	    if (data.msg.slice(0,8) == "gh!name ") {
+        	bot.name = he.decode(data.msg.slice(8))
+		socket.emit("user joined", bot.name, bot.color, "", "");
+    	    }
+	
+	    if (data.msg.slice(0,9) == "gh!color ") {
+                bot.color = he.decode(data.msg.slice(9))
+		socket.emit("user joined", bot.name, bot.color, "", "");
+    	    }
+	    if (data.msg.slice(0,7) == "gh!say ") {
+		msg = he.decode(data.msg.slice(7))
+		if(msg.startsWith('*hugs')) {
+			socket.send("nope")
+			return
+		}
+		msg = msg.replaceAll('discord', 'dis\u200Bcord')
+                socket.send(msg)
+           }
             })
